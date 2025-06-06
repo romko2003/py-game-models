@@ -10,7 +10,7 @@ def main() -> None:
         # Отримуємо або створюємо расу
         race_obj, _ = Race.objects.get_or_create(
             name=player_data["race"]["name"],
-            defaults={"description":player_data["race"].get(
+            defaults={"description": player_data["race"].get(
                 "description", ""
             )},
         )
