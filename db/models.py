@@ -23,7 +23,7 @@ class Skill(models.Model):
 
 class Guild(models.Model):
     name = models.CharField(max_length=255, unique=True)
-    description = models.TextField(blank=True, default='')  # виправлено null=True
+    description = models.TextField(blank=True, default="")
 
     def __str__(self) -> str:
         return self.name
@@ -41,6 +41,7 @@ class Player(models.Model):
         Guild,
         on_delete=models.SET_NULL,
         null=True,
+        blank=True,
     )
     created_at = models.DateTimeField(auto_now_add=True)
 

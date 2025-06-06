@@ -9,8 +9,8 @@ def main() -> None:
     guild_data = {"name": "Mages of Light"}  # Приклад даних, можеш замінити
 
     guild, _ = Guild.objects.get_or_create(
-        name=guild_data['name'],
-        defaults={'description': guild_data.get('description', '')}  # дефолт ''
+        name=guild_data["name"],
+        defaults={"description": guild_data.get("description", "")},
     )
 
     skill, _ = Skill.objects.get_or_create(name="Fireball", race=race)
@@ -25,10 +25,9 @@ def main() -> None:
             "race": race,
             "guild": guild,
             "created_at": datetime.datetime.now(),
-        }
+        },
     )
 
-    # Припущення: у Player є ManyToMany поле skills
     if hasattr(player, "skills"):
         player.skills.add(skill)
 
