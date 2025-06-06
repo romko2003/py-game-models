@@ -2,7 +2,6 @@ from db.models import Race, Skill, Player, Guild
 
 
 def main() -> None:
-    # Раси з описами
     elf_race, _ = Race.objects.get_or_create(
         name="elf",
         defaults={"description": "The magic race"},
@@ -12,48 +11,42 @@ def main() -> None:
         defaults={"description": "Human race"},
     )
 
-    # Гільдії з описами
     archers_guild, _ = Guild.objects.get_or_create(
         name="archers",
-        defaults={"description": "Archers guild"},
+        defaults={"description": None},  # опис None, як очікує тест
     )
     mags_guild, _ = Guild.objects.get_or_create(
         name="mags",
-        defaults={"description": "Mages guild"},
+        defaults={"description": "A community of the elf mags"},
     )
     blacksmiths_guild, _ = Guild.objects.get_or_create(
         name="blacksmiths",
-        defaults={"description": "Blacksmiths guild"},
+        defaults={"description": "A community of the blacksmiths"},
     )
 
-    # Скіли з повними описами
     Skill.objects.get_or_create(
         name="Teleportation",
         defaults={
-            "description": (
-                "The ability to move so fast they "
-                "look like they're teleporting. "
+            "bonus": (
+                "The ability to move so fast they look like they're teleporting. "
                 "Could be considered to technically be Teleportation."
             ),
-            "bonus": "",
+            "description": "",
             "race": elf_race,
         },
     )
     Skill.objects.get_or_create(
         name="Reality Warping",
         defaults={
-            "description": (
-                "The ability to Warp Reality. Make the impossible "
-                "become possible "
-                "but can't warp anything containing the structure that holds "
-                "everything together (Which are many creatures.)"
+            "bonus": (
+                "The ability to Warp Reality. Make the impossible become possible "
+                "but can't warp anything containing the structure that holds everything together (Which are many creatures.)"
             ),
-            "bonus": "",
+            "description": "",
             "race": elf_race,
         },
     )
 
-    # Створення гравців (всі bio мають бути як у тестах)
     Player.objects.get_or_create(
         nickname="john",
         defaults={
@@ -94,7 +87,7 @@ def main() -> None:
         nickname="nick",
         defaults={
             "email": "nick@gmail.com",
-            "bio": "Hello, I'm Nick",  # <- Виправлено! Не пустий рядок
+            "bio": "Hello, I'm Nick",
             "race": human_race,
             "guild": None,
         },
