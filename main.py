@@ -1,7 +1,7 @@
 import datetime
 from uuid import uuid4
 
-from db.models import Guild, Race, Player
+from db.models import Race, Skill, Player, Guild
 
 
 def main() -> None:
@@ -21,7 +21,16 @@ def main() -> None:
         },
     )
 
-    # Унікальний nickname через UUID
+    # Створюємо або отримуємо скіла
+    skill, _ = Skill.objects.get_or_create(
+        name="Fireball",
+        defaults={
+            "description": "A powerful fire magic spell.",
+            "power": 50,
+        },
+    )
+
+    # Унікальний nickname через UUID, щоб не було конфліктів
     unique_nickname = f"max_elf_{uuid4().hex[:6]}"
 
     # Створюємо або отримуємо гравця
@@ -36,4 +45,13 @@ def main() -> None:
         }
     )
 
+    # Можемо зв'язати гравця зі скілом (якщо в моделі Player є відповідний зв’язок)
+    # Припустимо, що Player має many-to-many поле skills
+    if hasattr(player, 'skills'):
+        player.skills.add(skill)
+
     print("Player created" if created else "Player already exists:", player)
+
+
+if __name__ == "__main__":
+    main()
