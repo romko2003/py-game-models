@@ -45,7 +45,6 @@ def main() -> None:
         }
     )
 
-
     if hasattr(player, "skills"):
         player.skills.add(skill)
 
