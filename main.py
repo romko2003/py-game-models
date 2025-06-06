@@ -45,9 +45,8 @@ def main() -> None:
         }
     )
 
-    # Можемо зв'язати гравця зі скілом (якщо в моделі Player є відповідний зв’язок)
-    # Припустимо, що Player має many-to-many поле skills
-    if hasattr(player, 'skills'):
+
+    if hasattr(player, "skills"):
         player.skills.add(skill)
 
     print("Player created" if created else "Player already exists:", player)
