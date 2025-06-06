@@ -6,15 +6,14 @@ from db.models import Race, Skill, Player, Guild
 
 def main() -> None:
     race, _ = Race.objects.get_or_create(name="Elf")
-    guild, _ = Guild.objects.get_or_create(name="Mages of Light")
+    guild_data = {"name": "Mages of Light"}  # Приклад даних, можеш замінити
 
-    skill, _ = Skill.objects.get_or_create(
-        name="Fireball",
-        defaults={
-            "bonus": "",
-            "race": race,
-        }
+    guild, _ = Guild.objects.get_or_create(
+        name=guild_data['name'],
+        defaults={'description': guild_data.get('description', '')}  # дефолт ''
     )
+
+    skill, _ = Skill.objects.get_or_create(name="Fireball", race=race)
 
     unique_nickname = f"max_elf_{uuid4().hex[:6]}"
 
@@ -29,6 +28,7 @@ def main() -> None:
         }
     )
 
+    # Припущення: у Player є ManyToMany поле skills
     if hasattr(player, "skills"):
         player.skills.add(skill)
 
