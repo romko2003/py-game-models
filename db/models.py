@@ -20,7 +20,8 @@ class Guild(models.Model):
 class Skill(models.Model):
     name = models.CharField(max_length=100, unique=True)
     description = models.TextField(blank=True, null=False, default="")
-    bonus = models.CharField(max_length=100, blank=True, null=False, default="")
+    bonus = models.CharField(max_length=100, blank=True, null=False,
+                             default="")
     race = models.ForeignKey(
         Race, on_delete=models.CASCADE, related_name="skills"
     )
