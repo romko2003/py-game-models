@@ -43,7 +43,8 @@ def main() -> None:
                 "The ability to Warp Reality. Make "
                 "the impossible become possible "
                 "but can't warp anything containing "
-                "the structure that holds everything together (Which are many creatures.)"
+                "the structure that holds everything together "
+                "(Which are many creatures.)"
             ),
             "description": "",
             "race": elf_race,
