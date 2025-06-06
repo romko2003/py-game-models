@@ -3,16 +3,28 @@ from db.models import Race, Skill, Player, Guild
 
 def main() -> None:
     # Створюємо раси
-    elf_race, _ = Race.objects.get_or_create(name="elf", defaults={"description": ""})
-    human_race, _ = Race.objects.get_or_create(name="human", defaults={"description": ""})
+    elf_race, _ = Race.objects.get_or_create(
+        name="elf", defaults={"description": ""}
+    )
+    human_race, _ = Race.objects.get_or_create(
+        name="human", defaults={"description": ""}
+    )
 
     # Створюємо гільдії
-    archers_guild, _ = Guild.objects.get_or_create(name="archers", defaults={"description": ""})
-    mags_guild, _ = Guild.objects.get_or_create(name="mags", defaults={"description": ""})
-    blacksmiths_guild, _ = Guild.objects.get_or_create(name="blacksmiths", defaults={"description": ""})
+    archers_guild, _ = Guild.objects.get_or_create(
+        name="archers", defaults={"description": ""}
+    )
+    mags_guild, _ = Guild.objects.get_or_create(
+        name="mags", defaults={"description": ""}
+    )
+    blacksmiths_guild, _ = Guild.objects.get_or_create(
+        name="blacksmiths", defaults={"description": ""}
+    )
 
-    # Створюємо скіли (якщо потрібно, можна додати більше)
-    Skill.objects.get_or_create(name="Fireball", defaults={"bonus": "", "race": elf_race})
+    # Створюємо скіли
+    Skill.objects.get_or_create(
+        name="Fireball", defaults={"bonus": "", "race": elf_race}
+    )
 
     # Створюємо гравців згідно з тестом
     Player.objects.get_or_create(
