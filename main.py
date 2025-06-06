@@ -7,7 +7,14 @@ from db.models import Race, Skill, Player, Guild
 def main() -> None:
     race, _ = Race.objects.get_or_create(name="Elf")
     guild, _ = Guild.objects.get_or_create(name="Mages of Light")
-    skill, _ = Skill.objects.get_or_create(name="Fireball")
+
+    skill, _ = Skill.objects.get_or_create(
+        name="Fireball",
+        defaults={
+            "bonus": "",
+            "race": race,
+        }
+    )
 
     unique_nickname = f"max_elf_{uuid4().hex[:6]}"
 
