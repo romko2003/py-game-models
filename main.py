@@ -3,6 +3,7 @@ from uuid import uuid4
 
 from db.models import Race, Skill, Player, Guild
 
+
 def main() -> None:
     race, _ = Race.objects.get_or_create(name="Elf")
     guild, _ = Guild.objects.get_or_create(name="Mages of Light")
