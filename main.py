@@ -4,29 +4,36 @@ from db.models import Race, Skill, Player, Guild
 def main() -> None:
     # Раси з описами
     elf_race, _ = Race.objects.get_or_create(
-        name="elf", defaults={"description": "The magic race"}
+        name="elf",
+        defaults={"description": "The magic race"},
     )
     human_race, _ = Race.objects.get_or_create(
-        name="human", defaults={"description": "Human race"}
+        name="human",
+        defaults={"description": "Human race"},
     )
 
     # Гільдії з описами
     archers_guild, _ = Guild.objects.get_or_create(
-        name="archers", defaults={"description": "Archers guild"}
+        name="archers",
+        defaults={"description": "Archers guild"},
     )
     mags_guild, _ = Guild.objects.get_or_create(
-        name="mags", defaults={"description": "Mages guild"}
+        name="mags",
+        defaults={"description": "Mages guild"},
     )
     blacksmiths_guild, _ = Guild.objects.get_or_create(
-        name="blacksmiths", defaults={"description": "Blacksmiths guild"}
+        name="blacksmiths",
+        defaults={"description": "Blacksmiths guild"},
     )
 
     # Скіли з правильними описами
     Skill.objects.get_or_create(
         name="Teleportation",
         defaults={
-            "description": "The ability to move so fast they look like they're "
-                           "teleporting. Could be considered to technically be Teleportation.",
+            "description": (
+                "The ability to move so fast they look like they're teleporting. "
+                "Could be considered to technically be Teleportation."
+            ),
             "bonus": "",
             "race": elf_race,
         },
@@ -34,10 +41,11 @@ def main() -> None:
     Skill.objects.get_or_create(
         name="Reality Warping",
         defaults={
-            "description": "The ability to Warp Reality. Make the impossible "
-                           "become possible but can't warp anything containing "
-                           "the structure that holds everything together (Which "
-                           "are many creatures.)",
+            "description": (
+                "The ability to Warp Reality. Make the impossible become possible "
+                "but can't warp anything containing the structure that holds "
+                "everything together (Which are many creatures.)"
+            ),
             "bonus": "",
             "race": elf_race,
         },
