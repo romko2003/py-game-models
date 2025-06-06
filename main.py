@@ -1,5 +1,6 @@
 import json
-from models import Race, Guild, Skill, Player  # Імпортуй свої моделі
+from models import Race, Guild, Skill, Player
+
 
 def main() -> None:
     with open("players.json", "r") as file:
