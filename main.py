@@ -4,7 +4,7 @@ from uuid import uuid4
 from db.models import Guild, Race, Player
 
 
-def main():
+def main() -> None:
     # Створюємо або отримуємо расу
     race, _ = Race.objects.get_or_create(
         name="Elf",
