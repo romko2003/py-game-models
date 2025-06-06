@@ -1,102 +1,53 @@
+import json
 from db.models import Race, Skill, Player, Guild
 
 
-def main() -> None:
-    elf_race, _ = Race.objects.get_or_create(
-        name="elf",
-        defaults={"description": "The magic race"},
-    )
-    human_race, _ = Race.objects.get_or_create(
-        name="human",
-        defaults={"description": "Human race"},
-    )
+def main():
+    # Відкриваємо JSON з гравцями
+    with open("players.json", "r") as f:
+        players_data = json.load(f)
 
-    archers_guild, _ = Guild.objects.get_or_create(
-        name="archers",
-        defaults={"description": None},  # опис None, як очікує тест
-    )
-    mags_guild, _ = Guild.objects.get_or_create(
-        name="mags",
-        defaults={"description": "A community of the elf mags"},
-    )
-    blacksmiths_guild, _ = Guild.objects.get_or_create(
-        name="blacksmiths",
-        defaults={"description": "A community of the blacksmiths"},
-    )
+    for p in players_data:
+        # Отримуємо або створюємо расу
+        race_obj, _ = Race.objects.get_or_create(
+            name=p["race"]["name"],
+            defaults={"description": p["race"].get("description", "")},
+        )
 
-    Skill.objects.get_or_create(
-        name="Teleportation",
-        defaults={
-            "bonus": (
-                "The ability to move so fast they look "
-                "like they're teleporting. "
-                "Could be considered to technically be Teleportation."
-            ),
-            "description": "",
-            "race": elf_race,
-        },
-    )
-    Skill.objects.get_or_create(
-        name="Reality Warping",
-        defaults={
-            "bonus": (
-                "The ability to Warp Reality. Make "
-                "the impossible become possible "
-                "but can't warp anything containing "
-                "the structure that holds everything together "
-                "(Which are many creatures.)"
-            ),
-            "description": "",
-            "race": elf_race,
-        },
-    )
+        # Отримуємо або створюємо гільдію (якщо є)
+        guild_data = p.get("guild")
+        if guild_data:
+            guild_obj, _ = Guild.objects.get_or_create(
+                name=guild_data["name"],
+                defaults={"description": guild_data.get("description", "")},
+            )
+        else:
+            guild_obj = None
 
-    Player.objects.get_or_create(
-        nickname="john",
-        defaults={
-            "email": "john@gmail.com",
-            "bio": "Hello, I'm John, elf ranger",
-            "race": elf_race,
-            "guild": archers_guild,
-        },
-    )
-    Player.objects.get_or_create(
-        nickname="max",
-        defaults={
-            "email": "max@gmail.com",
-            "bio": "Hello, I'm Max, elf mag",
-            "race": elf_race,
-            "guild": mags_guild,
-        },
-    )
-    Player.objects.get_or_create(
-        nickname="arthur",
-        defaults={
-            "email": "arthur@gmail.com",
-            "bio": "Arthur, elf mag",
-            "race": elf_race,
-            "guild": mags_guild,
-        },
-    )
-    Player.objects.get_or_create(
-        nickname="andrew",
-        defaults={
-            "email": "andrew@gmail.com",
-            "bio": "Hello, I'm Andrew",
-            "race": human_race,
-            "guild": blacksmiths_guild,
-        },
-    )
-    Player.objects.get_or_create(
-        nickname="nick",
-        defaults={
-            "email": "nick@gmail.com",
-            "bio": "Hello, I'm Nick",
-            "race": human_race,
-            "guild": None,
-        },
-    )
+        # Створимо список об'єктів скіллів
+        skill_objs = []
+        for skill_data in p.get("skills", []):
+            skill_obj, _ = Skill.objects.get_or_create(
+                name=skill_data["name"],
+                defaults={
+                    "bonus": skill_data.get("bonus", ""),
+                    "description": skill_data.get("description", ""),
+                    "race": race_obj,
+                },
+            )
+            skill_objs.append(skill_obj)
 
+        # Створюємо або отримуємо гравця
+        player_obj, created = Player.objects.get_or_create(
+            nickname=p["nickname"],
+            defaults={
+                "email": p.get("email", ""),
+                "bio": p.get("bio", ""),
+                "race": race_obj,
+                "guild": guild_obj,
+            },
+        )
 
-if __name__ == "__main__":
-    main()
+        # Оновлюємо скіли гравця (ManyToMany)
+        player_obj.skills.set(skill_objs)
+        player_obj.save()
