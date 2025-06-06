@@ -4,16 +4,18 @@ from datetime import datetime
 
 
 def main() -> None:
-    with open("players.json", "r") as f:
-        players = json.load(f)
+    with open("players.json", "r") as file:
+        player_list = json.load(file)
 
-    for p in players:
+    for player_data in player_list:
         race_obj, _ = Race.objects.get_or_create(
-            name=p["race"]["name"],
-            defaults={"description": p["race"]["description"]},
+            name=player_data["race"]["name"],
+            defaults={
+                "description": player_data["race"]["description"],
+            },
         )
 
-        for skill in p["race"]["skills"]:
+        for skill in player_data["race"]["skills"]:
             Skill.objects.get_or_create(
                 name=skill["name"],
                 defaults={
@@ -22,22 +24,26 @@ def main() -> None:
                 },
             )
 
-        guild_data = p.get("guild")
+        guild_data = player_data.get("guild")
         guild_obj = None
         if guild_data:
             guild_obj, _ = Guild.objects.get_or_create(
                 name=guild_data["name"],
-                defaults={"description": guild_data["description"]},
+                defaults={
+                    "description": guild_data["description"],
+                },
             )
 
         Player.objects.get_or_create(
-            nickname=p["nickname"],
+            nickname=player_data["nickname"],
             defaults={
-                "email": p["email"],
-                "bio": p["bio"],
+                "email": player_data["email"],
+                "bio": player_data["bio"],
                 "race": race_obj,
                 "guild": guild_obj,
-                "created_at": datetime.fromisoformat(p["created_at"]),
+                "created_at": datetime.fromisoformat(
+                    player_data["created_at"]
+                ),
             },
         )
 
