@@ -28,7 +28,8 @@ def main() -> None:
         name="Teleportation",
         defaults={
             "bonus": (
-                "The ability to move so fast they look like they're teleporting. "
+                "The ability to move so fast they look "
+                "like they're teleporting. "
                 "Could be considered to technically be Teleportation."
             ),
             "description": "",
@@ -39,8 +40,10 @@ def main() -> None:
         name="Reality Warping",
         defaults={
             "bonus": (
-                "The ability to Warp Reality. Make the impossible become possible "
-                "but can't warp anything containing the structure that holds everything together (Which are many creatures.)"
+                "The ability to Warp Reality. Make "
+                "the impossible become possible "
+                "but can't warp anything containing "
+                "the structure that holds everything together (Which are many creatures.)"
             ),
             "description": "",
             "race": elf_race,
