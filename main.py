@@ -10,8 +10,9 @@ def main() -> None:
         # Отримуємо або створюємо расу
         race_obj, _ = Race.objects.get_or_create(
             name=player_data["race"]["name"],
-            defaults={"description":
-                          player_data["race"].get("description", "")},
+            defaults={"description":player_data["race"].get(
+                "description", ""
+            )},
         )
 
         # Отримуємо або створюємо гільдію (може бути None)
