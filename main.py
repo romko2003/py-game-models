@@ -1,5 +1,5 @@
 import json
-from models import Race, Guild, Skill, Player
+from db.models import Race, Guild, Skill, Player
 
 
 def main() -> None:
