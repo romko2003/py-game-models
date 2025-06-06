@@ -1,41 +1,39 @@
-import json
-from db.models import Race, Guild, Skill, Player
+import datetime
+from uuid import uuid4
+
+from db.models import Guild, Race, Player
 
 
-def main() -> None:
-    with open("players.json", "r") as file:
-        players = json.load(file)
+def main():
+    # Створюємо або отримуємо расу
+    race, _ = Race.objects.get_or_create(
+        name="Elf",
+        defaults={
+            "description": "Graceful and wise forest dwellers.",
+        },
+    )
 
-    for player_data in players.values():
-        # Race
-        race_obj, _ = Race.objects.get_or_create(
-            name=player_data["race"]["name"],
-            defaults={"description": player_data["race"]["description"]}
-        )
+    # Створюємо або отримуємо гільдію
+    guild, _ = Guild.objects.get_or_create(
+        name="Mages of Light",
+        defaults={
+            "description": "An ancient order of elven mages.",
+        },
+    )
 
-        # Skills
-        for skill in player_data["race"].get("skills", []):
-            Skill.objects.get_or_create(
-                name=skill["name"],
-                bonus=skill["bonus"],
-                race=race_obj
-            )
+    # Унікальний nickname через UUID
+    unique_nickname = f"max_elf_{uuid4().hex[:6]}"
 
-        # Guild
-        guild_data = player_data.get("guild")
-        guild_obj = None
-        if guild_data:
-            guild_obj, _ = Guild.objects.get_or_create(
-                name=guild_data["name"],
-                defaults={"description": guild_data["description"]}
-            )
+    # Створюємо або отримуємо гравця
+    player, created = Player.objects.get_or_create(
+        nickname=unique_nickname,
+        defaults={
+            "email": "max@gmail.com",
+            "bio": "Hello, I'm Max, elf mag",
+            "race": race,
+            "guild": guild,
+            "created_at": datetime.datetime.now(),
+        }
+    )
 
-        # Player
-        Player.objects.get_or_create(
-            email=player_data["email"],
-            defaults={
-                "bio": player_data["bio"],
-                "race": race_obj,
-                "guild": guild_obj,
-            }
-        )
+    print("Player created" if created else "Player already exists:", player)
