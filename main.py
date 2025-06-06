@@ -1,6 +1,7 @@
 import json
 from db.models import Race, Guild, Skill, Player
 
+
 def main() -> None:
     with open("players.json", "r", encoding="utf-8") as file:
         players_data = json.load(file)
@@ -9,7 +10,8 @@ def main() -> None:
         # Отримуємо або створюємо расу
         race_obj, _ = Race.objects.get_or_create(
             name=player_data["race"]["name"],
-            defaults={"description": player_data["race"].get("description", "")},
+            defaults={"description":
+                          player_data["race"].get("description", "")},
         )
 
         # Отримуємо або створюємо гільдію (може бути None)
