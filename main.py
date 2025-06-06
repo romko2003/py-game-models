@@ -26,7 +26,7 @@ def main() -> None:
         defaults={"description": "Blacksmiths guild"},
     )
 
-    # Скіли з правильними описами
+    # Скіли з повними описами
     Skill.objects.get_or_create(
         name="Teleportation",
         defaults={
@@ -53,7 +53,7 @@ def main() -> None:
         },
     )
 
-    # Створення гравців (без змін)
+    # Створення гравців (всі bio мають бути як у тестах)
     Player.objects.get_or_create(
         nickname="john",
         defaults={
@@ -94,7 +94,7 @@ def main() -> None:
         nickname="nick",
         defaults={
             "email": "nick@gmail.com",
-            "bio": "",
+            "bio": "Hello, I'm Nick",  # <- Виправлено! Не пустий рядок
             "race": human_race,
             "guild": None,
         },
