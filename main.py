@@ -94,7 +94,7 @@ def main() -> None:
         nickname="nick",
         defaults={
             "email": "nick@gmail.com",
-            "bio": "Hello, I'm Nick",
+            "bio": "",
             "race": human_race,
             "guild": None,
         },
