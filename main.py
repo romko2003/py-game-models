@@ -2,31 +2,48 @@ from db.models import Race, Skill, Player, Guild
 
 
 def main() -> None:
-    # Створюємо раси
+    # Раси з описами
     elf_race, _ = Race.objects.get_or_create(
-        name="elf", defaults={"description": ""}
+        name="elf", defaults={"description": "The magic race"}
     )
     human_race, _ = Race.objects.get_or_create(
-        name="human", defaults={"description": ""}
+        name="human", defaults={"description": "Human race"}
     )
 
-    # Створюємо гільдії
+    # Гільдії з описами
     archers_guild, _ = Guild.objects.get_or_create(
-        name="archers", defaults={"description": ""}
+        name="archers", defaults={"description": "Archers guild"}
     )
     mags_guild, _ = Guild.objects.get_or_create(
-        name="mags", defaults={"description": ""}
+        name="mags", defaults={"description": "Mages guild"}
     )
     blacksmiths_guild, _ = Guild.objects.get_or_create(
-        name="blacksmiths", defaults={"description": ""}
+        name="blacksmiths", defaults={"description": "Blacksmiths guild"}
     )
 
-    # Створюємо скіли
+    # Скіли з правильними описами
     Skill.objects.get_or_create(
-        name="Fireball", defaults={"bonus": "", "race": elf_race}
+        name="Teleportation",
+        defaults={
+            "description": "The ability to move so fast they look like they're "
+                           "teleporting. Could be considered to technically be Teleportation.",
+            "bonus": "",
+            "race": elf_race,
+        },
+    )
+    Skill.objects.get_or_create(
+        name="Reality Warping",
+        defaults={
+            "description": "The ability to Warp Reality. Make the impossible "
+                           "become possible but can't warp anything containing "
+                           "the structure that holds everything together (Which "
+                           "are many creatures.)",
+            "bonus": "",
+            "race": elf_race,
+        },
     )
 
-    # Створюємо гравців згідно з тестом
+    # Створення гравців (без змін)
     Player.objects.get_or_create(
         nickname="john",
         defaults={
