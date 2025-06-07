@@ -2,26 +2,21 @@ from django.db import models
 
 
 class Race(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    description = models.TextField(blank=True, null=True)
-
-    def __str__(self) -> str:
-        return self.name
-
-
-class Guild(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    description = models.TextField(blank=True, null=True)
+    name: models.CharField = models.CharField(
+        max_length=255, unique=True
+    )
+    description: models.TextField = models.TextField(blank=True)
 
     def __str__(self) -> str:
         return self.name
 
 
 class Skill(models.Model):
-    name = models.CharField(max_length=100, unique=True)
-    bonus = models.TextField(blank=True, null=True)
-    description = models.TextField(blank=True, null=True)
-    race = models.ForeignKey(
+    name: models.CharField = models.CharField(
+        max_length=255, unique=True
+    )
+    bonus: models.CharField = models.CharField(max_length=255)
+    race: models.ForeignKey = models.ForeignKey(
         Race,
         on_delete=models.CASCADE,
         related_name="skills"
@@ -31,26 +26,38 @@ class Skill(models.Model):
         return self.name
 
 
+class Guild(models.Model):
+    name: models.CharField = models.CharField(
+        max_length=255, unique=True
+    )
+    description: models.TextField = models.TextField(
+        null=True, blank=True
+    )
+
+    def __str__(self) -> str:
+        return self.name
+
+
 class Player(models.Model):
-    nickname = models.CharField(max_length=100, unique=True)
-    email = models.EmailField()
-    bio = models.TextField(blank=True, null=True)
-    race = models.ForeignKey(
+    nickname: models.CharField = models.CharField(
+        max_length=255, unique=True
+    )
+    email: models.EmailField = models.EmailField(max_length=255)
+    bio: models.CharField = models.CharField(max_length=255)
+    race: models.ForeignKey = models.ForeignKey(
         Race,
         on_delete=models.CASCADE,
         related_name="players"
     )
-    guild = models.ForeignKey(
+    guild: models.ForeignKey = models.ForeignKey(
         Guild,
         on_delete=models.SET_NULL,
-        blank=True,
         null=True,
+        blank=True,
         related_name="players"
     )
-    skills = models.ManyToManyField(
-        Skill,
-        blank=True,
-        related_name="players"
+    created_at: models.DateTimeField = models.DateTimeField(
+        auto_now_add=True
     )
 
     def __str__(self) -> str:
