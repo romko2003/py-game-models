@@ -8,7 +8,6 @@ def main() -> NoReturn:
     with open("db/data.json", encoding="utf-8") as file:
         data = json.load(file)
 
-    # Створюємо раси та скіли
     for race_name, race_data in data["races"].items():
         race_obj, _ = Race.objects.get_or_create(
             name=race_name,
@@ -21,14 +20,12 @@ def main() -> NoReturn:
                 defaults={"bonus": bonus, "race": race_obj}
             )
 
-    # Створюємо гільдії
     for guild_name, guild_data in data["guilds"].items():
         Guild.objects.get_or_create(
             name=guild_name,
             defaults={"description": guild_data.get("description")}
         )
 
-    # Створюємо гравців
     for _, player_data in data["players"].items():
         race_obj = Race.objects.get(name=player_data["race"])
         guild_name = player_data.get("guild")
